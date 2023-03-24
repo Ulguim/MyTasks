@@ -16,7 +16,9 @@
         <button @click="deleteItem(item.id)" class="DeleteButton">
           Deletar
         </button>
-        <button class="button">Concluir</button>
+        <button v-show="!item.done" @click="finishItem(item.id)" class="button">
+          Concluir
+        </button>
       </div>
     </div>
   </div>
@@ -28,10 +30,13 @@ export default {
   data() {
     return {};
   },
-  props: ["lista", "delete"],
+  props: ["lista", "delete", "finish"],
   methods: {
     deleteItem(key) {
       this.delete(key);
+    },
+    finishItem(key) {
+      this.finish(key);
     },
   },
 };

@@ -13,7 +13,11 @@
         <button class="submitButton" type="submit">Adicionar</button>
       </div>
     </form>
-    <ItemList :delete="deleteTask" :lista="tasks"></ItemList>
+    <ItemList
+      :finish="finishTask"
+      :delete="deleteTask"
+      :lista="tasks"
+    ></ItemList>
   </div>
 </template>
 ''
@@ -38,7 +42,7 @@ export default {
   methods: {
     addTask() {
       this.task != ""
-        ? this.tasks.push({ name: this.task, id: Date.now() })
+        ? this.tasks.push({ name: this.task, id: Date.now(), done: false })
         : alert("Digite uma tarefa");
       this.task = "";
       localStorage.setItem("MyTasks", JSON.stringify(this.tasks));
@@ -46,6 +50,13 @@ export default {
     deleteTask(key) {
       this.tasks = this.tasks.filter((item) => item.id != key);
       localStorage.setItem("MyTasks", JSON.stringify(this.tasks));
+    },
+    finishTask(key) {
+      this.tasks.map((item) => {
+        if (item.id == key) {
+          item.done = !item.done;
+        }
+      });
     },
   },
 };
